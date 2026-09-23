@@ -1,0 +1,13 @@
+node_modules
+.next
+.env*
+*.tsbuildinfo
+AGENTS.md
+CLAUDE.md
+CHECKS.md
+README.md
+SOURCES.md
+verification*.json
+image-optimization.json
+scripts
+start-local.command

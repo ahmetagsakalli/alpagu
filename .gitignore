@@ -1,0 +1,17 @@
+node_modules/
+.next/
+.env*
+!.env.example
+*.tsbuildinfo
+.vercel/
+.DS_Store
+*.log
+.pnpm-store/
+out/
+
+# Yerel çalışma notları ve üretilen kontrol raporları
+CHECKS.md
+SOURCES.md
+verification*.json
+image-optimization.json
+start-local.command

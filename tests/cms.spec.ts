@@ -210,7 +210,28 @@ test("desktop editor saves Turkish copy and opens photo library", async ({
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/admin");
+  await expect(
+    page.getByRole("heading", { name: "Yönetim Paneli" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: "test-results/login-desktop.png",
+    fullPage: true,
+  });
   await page.getByLabel("Yönetim şifresi").fill(password);
+  await page
+    .getByRole("button", { name: "Şifreyi göster", exact: true })
+    .click();
+  await expect(page.getByLabel("Yönetim şifresi")).toHaveAttribute(
+    "type",
+    "text",
+  );
+  await page
+    .getByRole("button", { name: "Şifreyi gizle", exact: true })
+    .click();
+  await expect(page.getByLabel("Yönetim şifresi")).toHaveAttribute(
+    "type",
+    "password",
+  );
   await page.getByRole("button", { name: "Giriş yap", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Genel bakış", exact: true }),
@@ -239,6 +260,18 @@ test("mobile panel and public site fit viewport; FAQ opens exclusively", async (
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/admin");
+  await expect(
+    page.getByRole("heading", { name: "Yönetim Paneli" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: "test-results/login-mobile.png",
+    fullPage: true,
+  });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
   await page.getByLabel("Yönetim şifresi").fill(password);
   await page.getByRole("button", { name: "Giriş yap", exact: true }).click();
   await expect(

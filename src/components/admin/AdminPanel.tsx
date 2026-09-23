@@ -36,6 +36,7 @@ import {
 } from "@/lib/cms/schema";
 import MediaPicker, { previewUrl } from "./MediaPicker";
 import PasswordSettings, { type PasswordChange } from "./PasswordSettings";
+import AdminLogin from "./AdminLogin";
 type HistoryItem = Omit<Snapshot, "content">;
 type RecordResponse = Omit<ContentRecord, "history"> & {
   history: HistoryItem[];
@@ -477,44 +478,13 @@ export default function AdminPanel() {
     );
   if (phase === "login")
     return (
-      <main className="adm-login">
-        <form className="adm-login-card" onSubmit={signIn}>
-          <div className="adm-login-heading">
-            <Image
-              src="/images/logo.webp"
-              alt="Alpagu Derneği"
-              width={88}
-              height={88}
-            />
-            <h1>Yönetim Paneli</h1>
-          </div>
-          <label className="adm-field">
-            <span>Yönetim şifresi</span>
-            <input
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              required
-              maxLength={256}
-              onChange={(e) => setPassword(e.target.value)}
-              autoFocus
-            />
-          </label>
-          {error && (
-            <p className="adm-alert error" role="alert">
-              {error}
-            </p>
-          )}
-          <button className="adm-button" type="submit" disabled={busy}>
-            {busy ? "Giriş yapılıyor…" : "Giriş yap"}
-            <ArrowUpRight size={19} />
-          </button>
-        </form>
-        <a href="/" className="adm-return">
-          Alpagu Derneği sitesine dön <ExternalLink size={14} />
-        </a>
-      </main>
+      <AdminLogin
+        password={password}
+        onPasswordChange={setPassword}
+        onSubmit={signIn}
+        busy={busy}
+        error={error}
+      />
     );
   if (!draft || !record) return null;
   const active = navigation.find((n) => n.id === section)!;

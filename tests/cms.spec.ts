@@ -43,7 +43,10 @@ test("unauthorized APIs and cross-origin login are rejected", async ({
   const r = await request.get("/admin");
   expect(r.headers()["x-robots-tag"]).toContain("noindex");
   expect(r.headers()["cache-control"]).toContain("no-store");
-  expect(await r.text()).not.toContain("scrypt$");
+  const html = await r.text();
+  expect(html).not.toContain("scrypt$");
+  expect(html).toContain("Yönetim Paneli");
+  expect(html).toContain('id="admin-login-password"');
 });
 test("login cookies, CSRF, logout and session revocation", async ({
   request,
@@ -102,8 +105,18 @@ test("save is visible publicly, stale writes fail, restore works and validation 
   });
   expect(r.status()).toBe(400);
   expect((await get(request)).revision).toBe(saved.revision);
+  const writes = await Promise.all(
+    [0, 1].map(() =>
+      post(request, "content", csrf, {
+        content: { ...content, organization: before.content.organization },
+        revision: saved.revision,
+      }),
+    ),
+  );
+  expect(writes.map((r) => r.status()).sort()).toEqual([200, 409]);
+  const latest = await writes.find((r) => r.status() === 200)!.json();
   r = await post(request, "restore", csrf, {
-    revision: saved.revision,
+    revision: latest.revision,
     targetRevision: before.revision,
   });
   expect(r.status()).toBe(200);
@@ -208,6 +221,11 @@ test("desktop editor saves Turkish copy and opens photo library", async ({
   page,
 }) => {
   const errors: string[] = [];
+  const contentRequests: string[] = [];
+  page.on("request", (request) => {
+    if (new URL(request.url()).pathname === "/api/admin/content")
+      contentRequests.push(request.method());
+  });
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/admin");
   await expect(
@@ -236,6 +254,7 @@ test("desktop editor saves Turkish copy and opens photo library", async ({
   await expect(
     page.getByRole("heading", { name: "Genel bakış", exact: true }),
   ).toBeVisible();
+  expect(contentRequests).toEqual([]);
   await page.screenshot({
     path: "test-results/admin-desktop.png",
     fullPage: true,

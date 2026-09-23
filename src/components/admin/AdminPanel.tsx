@@ -86,8 +86,10 @@ function readableDate(date: string) {
     timeStyle: "short",
   }).format(new Date(date));
 }
-export default function AdminPanel() {
-  const [phase, setPhase] = useState<"loading" | "login" | "ready">("loading"),
+export default function AdminPanel({ hasSession }: { hasSession: boolean }) {
+  const [phase, setPhase] = useState<"loading" | "login" | "ready">(
+      hasSession ? "loading" : "login",
+    ),
     [draft, setDraft] = useState<SiteContent | null>(null),
     [record, setRecord] = useState<RecordResponse | null>(null),
     [csrf, setCsrf] = useState("");
@@ -107,6 +109,7 @@ export default function AdminPanel() {
     draft && record && JSON.stringify(draft) !== JSON.stringify(record.content),
   );
   useEffect(() => {
+    if (!hasSession) return;
     let active = true;
     fetch("/api/admin/content", { cache: "no-store" })
       .then(async (r) => {
@@ -132,7 +135,7 @@ export default function AdminPanel() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [hasSession]);
   useEffect(() => {
     const warn = (e: BeforeUnloadEvent) => {
       if (dirty) {
@@ -175,10 +178,9 @@ export default function AdminPanel() {
     setBusy(true);
     setError("");
     try {
-      const session = await api("login", { password });
-      setCsrf(session.csrf);
+      const result = await api("login", { password });
+      accept(result);
       setPassword("");
-      accept(await api("content"));
       setPhase("ready");
     } catch (e) {
       setError((e as Error).message);

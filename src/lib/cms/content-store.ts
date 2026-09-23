@@ -7,11 +7,16 @@ import { contentSchema, type ContentRecord, type SiteContent } from "./schema";
 import { initialRecord } from "./seed";
 export const CONTENT_TAG = "alpagu-content";
 const KEY = "content/published.json";
-export async function readContentRecord() {
+export async function readContentSnapshot() {
   return (
-    (await readRecord<ContentRecord>(KEY))?.value ??
-    structuredClone(initialRecord)
+    (await readRecord<ContentRecord>(KEY)) ?? {
+      value: structuredClone(initialRecord),
+      etag: undefined,
+    }
   );
+}
+export async function readContentRecord() {
+  return (await readContentSnapshot()).value;
 }
 const cachedContent = unstable_cache(
   async () => (await readContentRecord()).content,
@@ -30,10 +35,11 @@ export async function saveContent(
   data: unknown,
   revision: string,
   label: string,
+  snapshot?: Awaited<ReturnType<typeof readContentSnapshot>>,
 ) {
   const content = contentSchema.parse(data);
-  const stored = await readRecord<ContentRecord>(KEY);
-  const current = stored?.value ?? initialRecord;
+  const stored = snapshot ?? (await readContentSnapshot());
+  const current = stored.value;
   if (current.revision !== revision)
     throw new CmsError(
       "İçerik başka bir sekmede güncellendi. Değişikliklerinizi kopyalayıp sayfayı yenileyin.",
@@ -53,7 +59,8 @@ export async function saveContent(
     history: [previous, ...history].slice(0, 20),
   };
   try {
-    await writeRecord(KEY, next, stored?.etag);
+    // Reuse the read only with its ETag; a concurrent write still fails atomically.
+    await writeRecord(KEY, next, stored.etag);
   } catch (e) {
     if (isConflict(e))
       throw new CmsError(

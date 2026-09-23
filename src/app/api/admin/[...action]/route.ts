@@ -13,10 +13,11 @@ import { CmsError, readBinary } from "@/lib/cms/store";
 import {
   CONTENT_TAG,
   readContentRecord,
+  readContentSnapshot,
   saveContent,
 } from "@/lib/cms/content-store";
 import { listMedia, uploadMedia, prepareMedia } from "@/lib/cms/media";
-import { contentSchema } from "@/lib/cms/schema";
+import { contentSchema, type ContentRecord } from "@/lib/cms/schema";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const headers = {
@@ -26,11 +27,15 @@ const headers = {
 function json(value: unknown, status = 200) {
   return NextResponse.json(value, { status, headers });
 }
+function editorRecord({ history, ...record }: ContentRecord) {
+  return { ...record, history: history.map(({ content: _, ...s }) => s) };
+}
 function sessionResponse(
   req: NextRequest,
   result: { token: string; csrf: string },
+  record?: ReturnType<typeof editorRecord>,
 ) {
-  const response = json({ csrf: result.csrf });
+  const response = json({ ...record, csrf: result.csrf });
   response.cookies.set(COOKIE, result.token, {
     httpOnly: true,
     secure:
@@ -142,11 +147,9 @@ export async function GET(req: NextRequest, ctx: Context) {
     const key = action.join("/");
     if (key === "session") return json({ csrf: session.csrf });
     if (key === "content") {
-      const { history, ...record } = await readContentRecord();
       return json({
-        ...record,
+        ...editorRecord(await readContentRecord()),
         csrf: session.csrf,
-        history: history.map(({ content: _, ...s }) => s),
       });
     }
     if (key === "history")
@@ -175,7 +178,11 @@ export async function POST(req: NextRequest, ctx: Context) {
       if (typeof data.password !== "string")
         throw new CmsError("Şifrenizi girin.");
       const result = await login(req, data.password);
-      return sessionResponse(req, result);
+      return sessionResponse(
+        req,
+        result,
+        editorRecord(await readContentRecord()),
+      );
     }
     const session = await requireSession(req, true);
     if (key === "password") {
@@ -219,7 +226,8 @@ export async function POST(req: NextRequest, ctx: Context) {
       const data = await body(req);
       if (typeof data.revision !== "string")
         throw new CmsError("Kayıt sürümü eksik.");
-      const current = await readContentRecord();
+      const snapshot = await readContentSnapshot();
+      const current = snapshot.value;
       if (current.revision !== data.revision)
         throw new CmsError(
           "Başka bir sekmede değişiklik yapıldı. İçeriği yenileyin.",
@@ -240,12 +248,10 @@ export async function POST(req: NextRequest, ctx: Context) {
           : typeof data.label === "string"
             ? data.label
             : "İçerik güncellendi",
+        snapshot,
       );
       invalidate();
-      return json({
-        ...result,
-        history: result.history.map(({ content: _, ...s }) => s),
-      });
+      return json(editorRecord(result));
     }
     throw new CmsError("İşlem bulunamadı.", 404);
   } catch (e) {

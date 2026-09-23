@@ -78,6 +78,10 @@ Oturumlar 12 saattir; HttpOnly, SameSite=Strict ve canlıda Secure çerez kullan
 
 ## Doğrulama ve dağıtım
 
+Fonksiyonlar `vercel.json` ile içerik depolarının bulunduğu Frankfurt (`fra1`) bölgesinde çalışır. Giriş yanıtı, doğrulama tamamlandıktan sonra düzenleyici içeriğini de taşır; tarayıcı ikinci bir içerik isteğini beklemez. Çerez yoksa giriş formu doğrudan sunucu HTML’inde gösterilir. Çerez varlığı yalnız ilk görünümü seçer; her yönetim API’si gerçek oturum kontrolünü yapar.
+
+Kayıt sırasında okunan içerik ve ETag birlikte kullanılır; fazladan okuma kaldırılırken eşzamanlı yazma koruması korunur. Yalnız hazır site görselleri kullanılıyorsa görsel envanteri okunmaz. Oturumlar paylaşılan bellekte veya CDN’de önbelleğe alınmaz; çıkış ve şifre değişikliği geçerliliğini korur.
+
 ```sh
 pnpm typecheck
 pnpm test

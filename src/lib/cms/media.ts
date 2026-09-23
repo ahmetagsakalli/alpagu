@@ -73,7 +73,7 @@ export const builtinImages = [
   "social.webp",
 ].map((n) => `/images/${n}`);
 export async function prepareMedia(content: SiteContent) {
-  const assets = await listMedia();
+  let assets: StoredAsset[] | undefined;
   const replacements = new Map<string, string>();
   const visit = async (value: unknown, key = ""): Promise<unknown> => {
     if (Array.isArray(value)) {
@@ -90,6 +90,7 @@ export async function prepareMedia(content: SiteContent) {
       return value;
     if (builtinImages.includes(value)) return value;
     if (replacements.has(value)) return replacements.get(value)!;
+    assets ??= await listMedia();
     const asset = assets.find(
       (a) => a.url === value || `/api/media/${a.id}.webp` === value,
     );

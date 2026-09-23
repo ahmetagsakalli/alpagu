@@ -3,8 +3,8 @@ import { randomBytes, timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
 import { CmsError, mutateRecord, readRecord } from "./store";
 import { hashPassword, hashToken, verifyPassword } from "./password";
-export const COOKIE = "alpagu_admin";
-export const SESSION_SECONDS = 12 * 60 * 60;
+import { COOKIE, SESSION_SECONDS } from "./auth-config";
+export { COOKIE, SESSION_SECONDS } from "./auth-config";
 type Session = {
   hash: string;
   csrf: string;
@@ -90,22 +90,20 @@ export function checkOrigin(req: NextRequest) {
 }
 export async function login(req: NextRequest, password: string) {
   checkOrigin(req);
-  const stored = passwordHash(
-    (await readRecord<AuthState>(authKey))?.value ?? empty,
-  );
   const ip = process.env.VERCEL
     ? req.headers.get("x-vercel-forwarded-for") ||
       req.headers.get("x-real-ip") ||
       "unknown"
     : "local";
-  const key = hashToken(ip + stored);
-  await mutateRecord(authKey, empty, (v) => {
-    if (passwordHash(v) !== stored) throw sessionError();
+  const { stored, key } = await mutateRecord(authKey, empty, (v) => {
+    const stored = passwordHash(v);
+    const key = hashToken(ip + stored);
     reserveAttempt(
       v,
       key,
       "Çok fazla giriş denemesi. 15 dakika sonra yeniden deneyin.",
     );
+    return { stored, key };
   });
   if (password.length > 256 || !(await verifyPassword(password, stored))) {
     console.warn("CMS login rejected: invalid password");

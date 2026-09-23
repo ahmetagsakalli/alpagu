@@ -2,10 +2,15 @@ import Instagram from "@/components/InstagramIcon";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
-import { organization } from "@/lib/content";
+import { getContent } from "@/lib/cms/content-store";
+import { phoneHref, instagramName } from "@/lib/cms/schema";
 import styles from "./Footer.module.css";
 
-export default function Footer() {
+export default async function Footer() {
+  const { organization, projects } = await getContent();
+  const library = projects.find(
+    (p) => p.slug === "sehit-kutuphaneleri" && p.published,
+  );
   return (
     <footer className={styles.footer}>
       <div className="container">
@@ -26,16 +31,14 @@ export default function Footer() {
                 </small>
               </span>
             </Link>
-            <p>
-              Şehit Kütüphaneleri, eğitim desteği ve gönüllülük çalışmaları.
-            </p>
+            <p>{organization.footerText}</p>
             <a
               href={organization.instagram}
               className={styles.social}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Instagram size={18} /> @alpagudernegi{" "}
+              <Instagram size={18} /> {instagramName(organization.instagram)}{" "}
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
@@ -49,11 +52,13 @@ export default function Footer() {
                 <li>
                   <Link href="/projeler">Çalışmalarımız</Link>
                 </li>
-                <li>
-                  <Link href="/projeler/sehit-kutuphaneleri">
-                    Şehit Kütüphaneleri
-                  </Link>
-                </li>
+                {library && (
+                  <li>
+                    <Link href={`/projeler/${library.slug}`}>
+                      {library.title}
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
             <div className={styles.column}>
@@ -74,7 +79,7 @@ export default function Footer() {
           <div className={styles.contact}>
             <h3>İletişim</h3>
             <address>
-              <a href={organization.phoneHref} className={styles.phone}>
+              <a href={phoneHref(organization.phone)} className={styles.phone}>
                 <Phone size={18} aria-hidden="true" />
                 {organization.phone}
               </a>
@@ -84,7 +89,7 @@ export default function Footer() {
               </a>
               <span className={styles.location}>
                 <MapPin size={17} aria-hidden="true" />
-                İzmir, Türkiye
+                {organization.location}
               </span>
             </address>
           </div>

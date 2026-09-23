@@ -2,12 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check } from "lucide-react";
-import { projects } from "@/lib/content";
+import { getContent } from "@/lib/cms/content-store";
 import { pageMetadata, siteUrl } from "@/lib/seo";
 import { JoinBanner } from "@/components/Shared";
-export const dynamicParams = false;
-export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+export const dynamicParams = true;
+export async function generateStaticParams() {
+  const { projects } = await getContent();
+  return projects.filter((p) => p.published).map((p) => ({ slug: p.slug }));
 }
 export async function generateMetadata({
   params,
@@ -15,9 +16,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const p = projects.find((p) => p.slug === slug);
+  const { projects, organization } = await getContent();
+  const p = projects.find((p) => p.slug === slug && p.published);
   if (!p) return {};
-  return pageMetadata(p.title, p.summary, `/projeler/${slug}`);
+  return pageMetadata(
+    p.seo.title,
+    p.seo.description,
+    `/projeler/${slug}`,
+    p.seo.image,
+    organization.shortName,
+  );
 }
 export default async function Project({
   params,
@@ -25,7 +33,8 @@ export default async function Project({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const p = projects.find((p) => p.slug === slug);
+  const { projects, organization } = await getContent();
+  const p = projects.find((p) => p.slug === slug && p.published);
   if (!p) notFound();
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -49,13 +58,7 @@ export default async function Project({
   return (
     <>
       <section className="project-detail-hero">
-        <Image
-          src={`/images/${p.image}`}
-          alt={p.alt}
-          fill
-          sizes="100vw"
-          preload
-        />
+        <Image src={p.image} alt={p.alt} fill sizes="100vw" preload />
         <div className="project-detail-shade" />
         <div className="container">
           <div className="breadcrumbs">

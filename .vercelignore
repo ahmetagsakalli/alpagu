@@ -11,3 +11,10 @@ verification*.json
 image-optimization.json
 scripts
 start-local.command
+
+.cms
+tests
+test-results
+playwright-report
+playwright.config.ts
+.env*

@@ -1,8 +1,14 @@
 "use client";
 import { useState } from "react";
 import { Check, Copy, Landmark, ArrowUpRight } from "lucide-react";
-import { organization } from "@/lib/content";
-export default function Donation() {
+import type { Organization } from "@/lib/cms/schema";
+export default function Donation({
+  organization,
+  note,
+}: {
+  organization: Organization;
+  note: string;
+}) {
   const [copied, setCopied] = useState(false);
   const [failed, setFailed] = useState(false);
   async function copy() {
@@ -33,7 +39,7 @@ export default function Donation() {
         </div>
         <div>
           <span>Alıcı adı</span>
-          <strong>{organization.name}</strong>
+          <strong>{organization.accountName}</strong>
         </div>
         <div>
           <span>IBAN</span>
@@ -51,11 +57,7 @@ export default function Donation() {
             ? "IBAN panonuza kopyalandı. Bankanızın uygulamasında kullanabilirsiniz."
             : ""}
       </p>
-      <p className="donation-note">
-        Bağışınızın açıklama alanına destek olmak istediğiniz çalışmayı
-        yazabilirsiniz. Transfer öncesinde alıcı adının dernek adıyla
-        eşleştiğini kontrol edin.
-      </p>
+      <p className="donation-note">{note}</p>
       <a
         className="text-link"
         href={organization.donationSource}

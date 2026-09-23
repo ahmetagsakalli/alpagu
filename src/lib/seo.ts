@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { organization } from "./content";
 export const siteUrl = (
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
 ).replace(/\/$/, "");
@@ -9,26 +8,23 @@ export function pageMetadata(
   title: string,
   description: string,
   path: string,
+  image = "/images/social.webp",
+  siteName = "Alpagu Derneği",
 ): Metadata {
   return {
-    title:
-      path === "/"
-        ? { absolute: `${title} | ${organization.shortName}` }
-        : title,
+    title: { absolute: `${title} | ${siteName}` },
     description,
     alternates: { canonical: path },
     openGraph: {
-      title: `${title} | ${organization.shortName}`,
+      title: `${title} | ${siteName}`,
       description,
       url: path,
       type: "website",
       locale: "tr_TR",
-      siteName: organization.shortName,
+      siteName: siteName,
       images: [
         {
-          url: "/images/social.webp",
-          width: 1200,
-          height: 630,
+          url: image,
           alt: "Alpagu Derneği — Bir kitap, bir umut, bir gelecek",
         },
       ],
@@ -37,7 +33,7 @@ export function pageMetadata(
       card: "summary_large_image",
       title,
       description,
-      images: ["/images/social.webp"],
+      images: [image],
     },
   };
 }

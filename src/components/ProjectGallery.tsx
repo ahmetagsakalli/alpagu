@@ -13,6 +13,8 @@ type Project = {
 };
 export default function ProjectGallery({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState(0);
+  if (!projects.length) return null;
+  const activeIndex = Math.min(active, projects.length - 1);
   const change = (direction: number) =>
     setActive(
       (value) => (value + direction + projects.length) % projects.length,
@@ -23,13 +25,13 @@ export default function ProjectGallery({ projects }: { projects: Project[] }) {
         {projects.map((project, index) => (
           <article
             key={project.slug}
-            className={`project-panel ${active === index ? "is-active" : ""}`}
+            className={`project-panel ${activeIndex === index ? "is-active" : ""}`}
             onPointerEnter={(event) => {
               if (event.pointerType === "mouse") setActive(index);
             }}
           >
             <Image
-              src={`/images/${project.image}`}
+              src={project.image}
               alt={project.alt}
               fill
               sizes="(max-width: 700px) 100vw, 65vw"
@@ -37,7 +39,7 @@ export default function ProjectGallery({ projects }: { projects: Project[] }) {
             <div className="panel-shade" />
             <button
               className="panel-trigger"
-              aria-expanded={active === index}
+              aria-expanded={activeIndex === index}
               aria-controls={`panel-${project.slug}`}
               aria-label={`${project.title} çalışmasını göster`}
               onClick={() => setActive(index)}
@@ -47,7 +49,7 @@ export default function ProjectGallery({ projects }: { projects: Project[] }) {
             <div
               className="panel-copy"
               id={`panel-${project.slug}`}
-              hidden={active !== index}
+              hidden={activeIndex !== index}
             >
               <div>
                 <h3>{project.title}</h3>
@@ -66,7 +68,7 @@ export default function ProjectGallery({ projects }: { projects: Project[] }) {
       </div>
       <div className="showcase-controls">
         <span aria-live="polite" aria-atomic="true">
-          {String(active + 1).padStart(2, "0")}{" "}
+          {String(activeIndex + 1).padStart(2, "0")}{" "}
           <span>/ {String(projects.length).padStart(2, "0")}</span>
         </span>
         <button onClick={() => change(-1)} aria-label="Önceki çalışma">

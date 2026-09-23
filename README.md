@@ -25,7 +25,7 @@ pnpm build
 pnpm start
 ```
 
-Adres: http://127.0.0.1:3000. Geliştirme sunucusu yalnızca yerel bilgisayara bağlıdır. Ortam değişkenleri için `.env.example` dosyasını `.env.local` olarak kopyalayabilirsiniz. Yerel çalışma için ek servis veya gizli anahtar gerekmez.
+Adres: http://127.0.0.1:3000. Geliştirme sunucusu yalnızca yerel bilgisayara bağlıdır. Ortam değişkenleri için `.env.example` dosyasını `.env.local` olarak kopyalayabilirsiniz. Yerel site için ek servis gerekmez. Panel girişi için `pnpm admin:password` ile yönetim şifresini belirleyin.
 
 ## İçerik ve sayfalar
 
@@ -33,7 +33,8 @@ Adres: http://127.0.0.1:3000. Geliştirme sunucusu yalnızca yerel bilgisayara b
 - Havale/EFT bilgileri ve IBAN kopyalama
 - Derneğin mevcut gönüllü başvuru formuna bağlantı
 - İletişim, gizlilik ve özel 404 sayfası
-- Kurumsal bilgiler ve proje içerikleri: `src/lib/content.ts`
+- İçerik yönetimi: `/admin`; kullanım ve kurulum: [docs/ADMIN.md](docs/ADMIN.md)
+- Başlangıç içerikleri: `src/lib/cms/seed.ts` ve `initial-pages.json`
 - Temel stiller: `src/app/globals.css`
 - Referansa göre yenilenen header, hero ve görsel düzen: `src/app/reference-theme.css`
 - Alt bölüm tasarımı: `src/app/editorial.css`; açılan proje panelleri: `src/components/ProjectGallery.tsx`
@@ -44,7 +45,7 @@ Kurumsal içerikler dernek tarafından sağlanan bilgiler ve resmî Instagram he
 
 ## Görsel optimizasyonu
 
-`sharp` doğrudan bağımlılık olarak kuruldu. Tüm fotoğraflar WebP'ye dönüştürüldü. `next/image`, farklı ekran boyutlarında uygun genişliği sunar; ilk büyük görsel öncelikli, aşağıdaki görseller tembel yüklenir. Görseller ve yazı tipleri yerelden sunulur.
+`sharp` doğrudan bağımlılık olarak kuruldu. Tüm fotoğraflar WebP'ye dönüştürüldü. `next/image`, farklı ekran boyutlarında uygun genişliği sunar; ilk büyük görsel öncelikli, aşağıdaki görseller tembel yüklenir. Başlangıç görselleri ve yazı tipleri yerelden; panelden yüklenen görseller projeye ait Vercel Blob deposundan sunulur.
 
 ```sh
 pnpm optimize:images /tam/yol/orijinal-gorseller
@@ -72,7 +73,7 @@ Sık sorulan sorular aynı `name` değerine sahip yerel HTML `details` öğeleri
 - Statik üretim, responsive görseller, yerel fontlar, güvenlik başlıkları
 - `robots.txt`, `sitemap.xml`, favicon ve sosyal paylaşım görseli
 
-Üretim ortamında `NEXT_PUBLIC_SITE_URL=https://alpagu-dernegi.vercel.app` ve `SITE_INDEXABLE=true` Vercel üzerinde tanımlıdır. Canonical, sosyal paylaşım ve yapılandırılmış veri adresleri canlı alan adını kullanır; robots taramaya açıktır ve sitemap 10 sayfa içerir. Önizlemeler ve yerel çalışma varsayılan olarak indekslemeye kapalıdır. Özel alan adı bağlandığında `NEXT_PUBLIC_SITE_URL` güncellenip yeniden yayınlanmalıdır.
+Üretim ortamında `NEXT_PUBLIC_SITE_URL=https://alpagu-dernegi.vercel.app` ve `SITE_INDEXABLE=true` Vercel üzerinde tanımlıdır. Canonical, sosyal paylaşım ve yapılandırılmış veri adresleri canlı alan adını kullanır; robots taramaya açıktır ve sitemap yayımlanan çalışma sayfalarıyla otomatik güncellenir. Önizlemeler ve yerel çalışma varsayılan olarak indekslemeye kapalıdır. Özel alan adı bağlandığında `NEXT_PUBLIC_SITE_URL` güncellenip yeniden yayınlanmalıdır.
 
 Projeyi Vercel hesabınıza bağlayıp yeniden yayınlamak için:
 
@@ -93,6 +94,6 @@ TEST_BASE_URL=https://alpagu-dernegi.vercel.app TEST_CANONICAL_URL=https://alpag
 
 Kartla online bağış / İş Bankası sanal POS entegrasyonu etkin değildir. Banka tarafından sağlanacak satıcı ve entegrasyon bilgileri olmadan kart bilgisi toplanmaz, örnek ödeme veya başarılı bağış kaydı oluşturulmaz. Mevcut bağış sayfası doğrulanmış havale/EFT bilgilerini sunar.
 
-Türkçe yönetim paneli bu sürüme dahil değildir; içerik tek bir TypeScript dosyasından yönetilir. Yönetim paneli ve ödeme entegrasyonu ayrı arka uç çalışması gerektirir.
+Türkçe yönetim paneli `/admin` adresindedir. Metinler, görseller, çalışmalar, haberler, sorular, iletişim ve bağış bilgileri panelden yönetilir. [Yönetim paneli rehberi](docs/ADMIN.md).
 
 23 Eylül 2026 tarihinde Vercel üretim yayını tamamlandı. Özel alan adı henüz bağlanmadı; Vercel adresi kullanılıyor.

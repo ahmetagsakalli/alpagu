@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { Heart, Phone } from "lucide-react";
-import { organization } from "@/lib/content";
+import { getContent } from "@/lib/cms/content-store";
+import { phoneHref, instagramName } from "@/lib/cms/schema";
 
-export default function FloatingActions() {
+export default async function FloatingActions() {
+  const { organization } = await getContent();
   return (
     <nav aria-label="Hızlı iletişim ve destek">
       <a
         className="floating-action floating-call"
-        href={organization.phoneHref}
+        href={phoneHref(organization.phone)}
         aria-label={`Alpagu Derneğini arayın: ${organization.phone}`}
         title="Bizi arayın"
       >

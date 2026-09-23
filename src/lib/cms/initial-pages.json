@@ -1,0 +1,243 @@
+{
+  "home": {
+    "title": "UMUT",
+    "subtitle": "Çocukların yarınları için.",
+    "image": "/images/reading.webp",
+    "alt": "Kütüphanede birlikte kitap okuyan iki çocuk; temsili fotoğraf",
+    "primaryLabel": "Çalışmalarımız",
+    "primaryHref": "#calismalarimiz",
+    "secondaryLabel": "Destek Ol",
+    "secondaryHref": "/bagis",
+    "aboutTitle": "Bir okulun\nkütüphanesiyle başladı.",
+    "aboutIntro": "İzmir’den başlayan bir çalışma.",
+    "aboutSince": "2016’dan beri.",
+    "aboutParagraphs": [
+      "2016’da Ege Üniversitesi öğrencileri olarak “Bir Kitap Bin Fırat” projesini başlattık. İlk kütüphanemizi Kemalpaşa Ören Ortaokulu’nda, Şehit Fırat Yılmaz Çakıroğlu adına kurduk.",
+      "Bugün 40 Şehit Kütüphanesiyle çalışmalarımızı sürdürüyor; çocuklara kitap, kırtasiye ve okul kıyafeti desteği sağlıyoruz."
+    ],
+    "aboutImage": "/images/library.webp",
+    "aboutAlt": "Rafları kitaplarla dolu bir kütüphane; temsili fotoğraf",
+    "workTitle": "Çalışmalarımız",
+    "newsTitle": "Dernekten haberler",
+    "faqTitle": "Sık sorulan sorular",
+    "seo": {
+      "title": "Bir Kitap, Bir Umut, Bir Gelecek",
+      "description": "Alpagu Derneği; 40 Şehit Kütüphanesi, 22.000’den fazla kitap bağışı ve eğitim destekleriyle çocukların geleceğine sahip çıkıyor.",
+      "image": "/images/social.webp"
+    }
+  },
+  "pages": {
+    "hakkimizda": {
+      "title": "Bir hatıradan, binlerce yarına.",
+      "description": "Şehitlerimizin adını güzel işlerle geleceğe taşımak için bir aradayız.",
+      "heading": "İyiliğin izinde,",
+      "emphasis": "aynı inançla.",
+      "lead": "Alpagu Eğitim Araştırma ve Yardımlaşma Derneği, çocukların eğitime erişimini desteklemek ve şehitlerimizin hatırasını kalıcı eserlerle yaşatmak için çalışır.",
+      "paragraphs": [
+        "Hikâyemiz, 2016 yılında Ege Üniversitesi öğrencilerinin başlattığı “Bir Kitap Bin Fırat” projesiyle başladı. Şehit Fırat Yılmaz Çakıroğlu adına ilk kütüphanemizi Kemalpaşa Ören Ortaokulu’nda kurduk.",
+        "Daha fazla şehidimizin adını yaşatmak için çalışmalarımızı Şehit Kütüphaneleri adıyla sürdürdük. Türkiye’nin farklı şehirlerindeki okullarda kitapları çocuklarla buluşturduk.",
+        "2023 yılında Van’ın Özalp ilçesindeki kütüphane çalışmasının ardından, faaliyetlerimizin daha kalıcı bir yapıya kavuşması için dernekleşme adımını attık. Alpagu Derneği, 3 Mayıs 2023 tarihinde resmen kuruldu.",
+        "Bugün kütüphanelerin yanında kırtasiye, okul kıyafeti ve eğitim materyali desteği sağlıyor; çocukların sosyal ve kültürel gelişimine katkıda bulunan etkinlikler düzenliyoruz."
+      ],
+      "image": "/images/library.webp",
+      "alt": "Kitaplarla dolu kütüphane rafları; temsili fotoğraf",
+      "items": [
+        {
+          "year": "2016",
+          "title": "Bir Kitap Bin Fırat",
+          "text": "Ege Üniversitesi öğrencilerinin girişimiyle ilk kütüphane Kemalpaşa Ören Ortaokulu’nda açıldı."
+        },
+        {
+          "year": "2016–2023",
+          "title": "35 Şehit Kütüphanesi",
+          "text": "İzmir, Erzurum, Mersin, Eskişehir, Konya ve Van’da şehitlerimizin adını yaşatan kütüphaneler kuruldu."
+        },
+        {
+          "year": "3 Mayıs 2023",
+          "title": "Alpagu Derneği kuruldu",
+          "text": "Gönüllülükle büyüyen hareketimiz, eğitim, araştırma ve yardımlaşma derneği çatısı altında devam etti."
+        },
+        {
+          "year": "Bugün",
+          "title": "40 kütüphane, binlerce gelecek",
+          "text": "22.000’den fazla kitap bağışı ve 10.000’den fazla çocuğa ulaşan çalışmalarla iyiliği birlikte büyütüyoruz."
+        }
+      ],
+      "extraHeading": "Küçük bir adım.",
+      "extraEmphasis": "Kalıcı bir iz.",
+      "note": "",
+      "seo": {
+        "title": "Hakkımızda",
+        "description": "2016’da Bir Kitap Bin Fırat projesiyle başlayan, 3 Mayıs 2023’te dernekleşen Alpagu’nun hikâyesini, amacını ve eğitim çalışmalarını tanıyın.",
+        "image": "/images/social.webp"
+      }
+    },
+    "bagis": {
+      "title": "Bir çocuğun yarınına dokunun.",
+      "description": "Bir kitap, bir okul çantası, yeni bir kütüphane… Her katkı, birlikte büyüttüğümüz iyiliğin bir parçası.",
+      "heading": "Küçük bir katkı.",
+      "emphasis": "Büyük bir anlam.",
+      "lead": "Şehitlerimizin hatırasını yaşatan ve çocukların eğitimini destekleyen çalışmalarımıza katılın.",
+      "paragraphs": [],
+      "image": "/images/library.webp",
+      "alt": "Kitaplarla dolu kütüphane rafları; temsili fotoğraf",
+      "items": [
+        {
+          "title": "Kitap ve eğitim materyali",
+          "text": "Kitap, kırtasiye ve okul kıyafeti desteği için güncel ihtiyaçları ekibimizden öğrenebilirsiniz.",
+          "year": ""
+        },
+        {
+          "title": "Zamanınız da bir destek",
+          "text": "Gönüllü emeğinizle kütüphanelerimizin ve eğitim çalışmalarımızın bir parçası olun.",
+          "year": ""
+        }
+      ],
+      "extraHeading": "",
+      "extraEmphasis": "",
+      "note": "Bağışınızın açıklama alanına destek olmak istediğiniz çalışmayı yazabilirsiniz. Transfer öncesinde alıcı adının dernek adıyla eşleştiğini kontrol edin.",
+      "seo": {
+        "title": "Bağış ve Destek",
+        "description": "Alpagu Derneğinin Şehit Kütüphaneleri ve eğitim çalışmalarına havale/EFT, kitap, kırtasiye veya gönüllü emeğinizle destek olun.",
+        "image": "/images/social.webp"
+      }
+    },
+    "gonullu-ol": {
+      "title": "İyilik, birlikte emek vermekle başlar.",
+      "description": "Zamanınızı, bilginizi ve heyecanınızı paylaşın. Çocukların yarınlarına birlikte güzel bir iz bırakalım.",
+      "heading": "Birlikte yapacak",
+      "emphasis": "çok güzel işimiz var.",
+      "lead": "Kitapların hazırlanmasından kütüphane çalışmalarına, eğitim desteğinden sosyal etkinliklere kadar her adımda gönüllülerimizin katkısı var.",
+      "paragraphs": [],
+      "image": "/images/reading.webp",
+      "alt": "Kütüphanede kitap okuyan çocuklar; temsili fotoğraf",
+      "items": [
+        {
+          "title": "Kitap ve kütüphane çalışmalarına katkı sunun.",
+          "text": "",
+          "year": ""
+        },
+        {
+          "title": "Eğitim desteklerinde dayanışmayı büyütün.",
+          "text": "",
+          "year": ""
+        },
+        {
+          "title": "Sosyal ve kültürel etkinliklerde yer alın.",
+          "text": "",
+          "year": ""
+        }
+      ],
+      "extraHeading": "",
+      "extraEmphasis": "",
+      "note": "Derneğimizin Google Forms başvuru formu yeni sekmede açılır.",
+      "seo": {
+        "title": "Gönüllü Ol",
+        "description": "Alpagu Derneğinin gönüllüleri arasına katılın. Kitaplarla, eğitimle ve dayanışmayla çocukların geleceğine birlikte katkı sunalım.",
+        "image": "/images/social.webp"
+      }
+    },
+    "iletisim": {
+      "title": "Birlikte güzel şeyler yapabiliriz.",
+      "description": "Destek olmak, gönüllü olarak katılmak veya çalışmalarımız hakkında bilgi almak için bize ulaşın.",
+      "heading": "Bir merhaba,",
+      "emphasis": "yeni bir başlangıç.",
+      "lead": "Kitap bağışı, eğitim desteği ve iş birliği için sizinle tanışmaktan mutluluk duyarız.",
+      "paragraphs": [],
+      "image": "/images/library.webp",
+      "alt": "Kitaplarla dolu kütüphane rafları; temsili fotoğraf",
+      "items": [],
+      "extraHeading": "",
+      "extraEmphasis": "",
+      "note": "Kitap ve malzeme göndermeden önce güncel ihtiyaçları ve teslim bilgilerini ekibimizden öğrenebilirsiniz.",
+      "seo": {
+        "title": "İletişim",
+        "description": "Alpagu Eğitim Araştırma ve Yardımlaşma Derneğine ulaşın. Kitap bağışı, eğitim desteği, gönüllülük ve iş birliği için iletişim kanallarımız.",
+        "image": "/images/social.webp"
+      }
+    },
+    "gizlilik": {
+      "title": "Gizliliğinize saygı duyuyoruz.",
+      "description": "Bu internet sitesinin kullanımı hakkında bilgiler.",
+      "heading": "",
+      "emphasis": "",
+      "lead": "",
+      "paragraphs": [],
+      "image": "/images/library.webp",
+      "alt": "Kitaplarla dolu kütüphane rafları; temsili fotoğraf",
+      "items": [
+        {
+          "title": "Site kullanımı",
+          "text": "Bu sitede reklam veya ziyaretçi analizi amacıyla çerez kullanılmaz. Sayfaları görüntülemek için üyelik oluşturmanız gerekmez. Yönetim paneline giriş yapan yetkililer için zorunlu oturum çerezi kullanılır.",
+          "year": ""
+        },
+        {
+          "title": "Bağış bilgileri",
+          "text": "Bağış sayfası derneğin havale/EFT hesap bilgilerini sunar. Bu sitede kart bilgisi alınmaz ve ödeme işlemi gerçekleştirilmez. Transfer işlemi kullandığınız banka üzerinden yürütülür.",
+          "year": ""
+        },
+        {
+          "title": "Dış bağlantılar",
+          "text": "Instagram ve Google Forms bağlantıları sizi ilgili hizmete yönlendirir. Bu hizmetleri kullandığınızda ilgili hizmet sağlayıcının gizlilik koşulları geçerli olur. Gönüllü başvurunuzu göndermeden önce formdaki bilgilendirmeyi okuyabilirsiniz.",
+          "year": ""
+        }
+      ],
+      "extraHeading": "",
+      "extraEmphasis": "",
+      "note": "",
+      "seo": {
+        "title": "Gizlilik ve Çerezler",
+        "description": "Alpagu Derneği internet sitesinin çerez kullanımı, dış bağlantıları ve iletişim kanalları hakkında bilgiler.",
+        "image": "/images/social.webp"
+      }
+    },
+    "projeler": {
+      "title": "Her adımımız, güzel bir yarın için.",
+      "description": "Kütüphanelerden okul sıralarına, birlikte öğrenilen anlardan yeni hayallere uzanan bir dayanışma.",
+      "heading": "",
+      "emphasis": "",
+      "lead": "",
+      "paragraphs": [],
+      "image": "/images/library.webp",
+      "alt": "Kitaplarla dolu kütüphane rafları; temsili fotoğraf",
+      "items": [],
+      "extraHeading": "",
+      "extraEmphasis": "",
+      "note": "",
+      "seo": {
+        "title": "Çalışmalarımız",
+        "description": "Şehit Kütüphaneleri, eğitim materyali desteği ve çocuklar için sosyal ve kültürel çalışmalar. Alpagu Derneğinin projelerini keşfedin.",
+        "image": "/images/social.webp"
+      }
+    }
+  },
+  "news": [
+    {
+      "id": "news-1",
+      "image": "/images/news-education.webp",
+      "title": "25 çocuğa okul desteği",
+      "text": "Çanta, ayakkabı ve kırtasiye desteği için hazırladığımız kampanya.",
+      "alt": "Alpagu Derneğinin 25 çocuğa eğitim desteği duyurusu",
+      "href": "https://www.instagram.com/alpagudernegi/p/DcNnXFAIt0v/",
+      "published": true
+    },
+    {
+      "id": "news-2",
+      "image": "/images/news-support.webp",
+      "title": "Şehit Kütüphanelerine destek",
+      "text": "Kütüphane çalışmalarımıza katkıda bulunmak isteyenler için bağış bilgileri.",
+      "alt": "Şehit Kütüphaneleri Projesine destek için Alpagu Derneği duyurusu",
+      "href": "https://www.instagram.com/alpagudernegi/p/DdWPAGOofY-/",
+      "published": true
+    },
+    {
+      "id": "news-3",
+      "image": "/images/news-story.webp",
+      "title": "Alpagu Derneği neler yapıyor?",
+      "text": "Kütüphanelerimizi, eğitim desteklerimizi ve gönüllülük çalışmalarımızı anlattık.",
+      "alt": "Alpagu Derneğinin çalışmalarını tanıtan Instagram paylaşımı",
+      "href": "https://www.instagram.com/alpagudernegi/p/DcmEgJgiI9h/",
+      "published": true
+    }
+  ]
+}

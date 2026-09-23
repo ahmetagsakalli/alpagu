@@ -15,3 +15,7 @@ SOURCES.md
 verification*.json
 image-optimization.json
 start-local.command
+
+.cms/
+test-results/
+playwright-report/

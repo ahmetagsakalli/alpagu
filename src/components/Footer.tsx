@@ -19,7 +19,7 @@ export default async function Footer() {
             <Link
               href="/"
               className={styles.brand}
-              aria-label="Alpagu Derneği ana sayfa"
+              title="Ana sayfa"
             >
               <Image src="/images/logo.webp" width={64} height={64} alt="" />
               <span>

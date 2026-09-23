@@ -32,13 +32,13 @@ export default function Header() {
         className="site-brand"
         href="/"
         onClick={() => setOpen(false)}
-        aria-label="Alpagu Derneği ana sayfa"
+        title="Ana sayfa"
       >
         <Image
           src="/images/logo.webp"
           width={58}
           height={58}
-          alt="Alpagu Derneği logosu"
+          alt=""
         />
         <span>
           <strong>Alpagu</strong>

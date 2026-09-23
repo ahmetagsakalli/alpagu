@@ -28,8 +28,9 @@ export default async function Home() {
             alt={home.alt}
             fill
             sizes="(max-width: 700px) 100vw, 70vw"
-            preload
-            quality={85}
+            loading="eager"
+            fetchPriority="high"
+            quality={75}
           />
         </div>
         <div className="home-hero-shade" aria-hidden="true" />

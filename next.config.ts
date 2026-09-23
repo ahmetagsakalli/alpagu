@@ -23,6 +23,11 @@ const config: NextConfig = {
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow" },
           { key: "Cache-Control", value: "private, no-store" },
+          {
+            key: "Content-Security-Policy",
+            value:
+              "frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
+          },
         ],
       },
       {

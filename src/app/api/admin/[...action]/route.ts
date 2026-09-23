@@ -7,6 +7,7 @@ import {
   login,
   logout,
   requireSession,
+  changePassword,
 } from "@/lib/cms/auth";
 import { CmsError, readBinary } from "@/lib/cms/store";
 import {
@@ -24,6 +25,21 @@ const headers = {
 };
 function json(value: unknown, status = 200) {
   return NextResponse.json(value, { status, headers });
+}
+function sessionResponse(
+  req: NextRequest,
+  result: { token: string; csrf: string },
+) {
+  const response = json({ csrf: result.csrf });
+  response.cookies.set(COOKIE, result.token, {
+    httpOnly: true,
+    secure:
+      Boolean(process.env.VERCEL) || new URL(req.url).protocol === "https:",
+    sameSite: "strict",
+    path: "/",
+    maxAge: SESSION_SECONDS,
+  });
+  return response;
 }
 async function limitedBody(req: NextRequest, max = 1_000_000) {
   if (Number(req.headers.get("content-length")) > max)
@@ -159,18 +175,27 @@ export async function POST(req: NextRequest, ctx: Context) {
       if (typeof data.password !== "string")
         throw new CmsError("Şifrenizi girin.");
       const result = await login(req, data.password);
-      const response = json({ csrf: result.csrf });
-      response.cookies.set(COOKIE, result.token, {
-        httpOnly: true,
-        secure:
-          Boolean(process.env.VERCEL) || new URL(req.url).protocol === "https:",
-        sameSite: "strict",
-        path: "/",
-        maxAge: SESSION_SECONDS,
-      });
-      return response;
+      return sessionResponse(req, result);
     }
     const session = await requireSession(req, true);
+    if (key === "password") {
+      const data = await body(req);
+      if (
+        typeof data.currentPassword !== "string" ||
+        typeof data.newPassword !== "string" ||
+        typeof data.confirmPassword !== "string"
+      )
+        throw new CmsError("Mevcut şifreyi, yeni şifreyi ve tekrarını girin.");
+      return sessionResponse(
+        req,
+        await changePassword(
+          session,
+          data.currentPassword,
+          data.newPassword,
+          data.confirmPassword,
+        ),
+      );
+    }
     if (key === "logout") {
       await logout(session.hash);
       const response = json({ ok: true });

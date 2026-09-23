@@ -16,6 +16,7 @@ import {
   History,
   Home,
   ImageIcon,
+  KeyRound,
   LayoutDashboard,
   LogOut,
   Menu,
@@ -23,7 +24,6 @@ import {
   Plus,
   Save,
   Settings,
-  ShieldCheck,
   Trash2,
   X,
 } from "lucide-react";
@@ -35,6 +35,7 @@ import {
   type Snapshot,
 } from "@/lib/cms/schema";
 import MediaPicker, { previewUrl } from "./MediaPicker";
+import PasswordSettings, { type PasswordChange } from "./PasswordSettings";
 type HistoryItem = Omit<Snapshot, "content">;
 type RecordResponse = Omit<ContentRecord, "history"> & {
   history: HistoryItem[];
@@ -50,6 +51,7 @@ const navigation = [
   { id: "media", label: "Görsel kitaplığı", icon: ImageIcon },
   { id: "organization", label: "Site bilgileri", icon: Settings },
   { id: "history", label: "Kayıt geçmişi", icon: History },
+  { id: "password", label: "Şifre değiştir", icon: KeyRound },
 ];
 const pageLabels: Record<PageKey, string> = {
   hakkimizda: "Hakkımızda",
@@ -243,6 +245,22 @@ export default function AdminPanel() {
       setPhase("login");
     } catch (e) {
       setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function updatePassword(values: PasswordChange) {
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const result = await api("password", values);
+      setCsrf(result.csrf);
+      setNotice("Şifreniz değiştirildi. Diğer açık oturumlar kapatıldı.");
+      return true;
+    } catch (e) {
+      setError((e as Error).message);
+      return false;
     } finally {
       setBusy(false);
     }
@@ -523,11 +541,8 @@ export default function AdminPanel() {
           rel="noopener noreferrer"
         >
           <Image src="/images/logo.webp" alt="" width={44} height={44} />
-          <span>
-            ALPAGU<small>İçerik yönetimi</small>
-          </span>
+          <span>ALPAGU</span>
         </a>
-        <span className="adm-nav-label">ÇALIŞMA ALANI</span>
         <nav aria-label="Yönetim menüsü">
           {navigation.map((n) => (
             <button
@@ -543,10 +558,6 @@ export default function AdminPanel() {
           ))}
         </nav>
         <div className="adm-sidebar-bottom">
-          <span>
-            <ShieldCheck size={17} />
-            Güvenli yönetim oturumu
-          </span>
           <button onClick={signOut} disabled={busy}>
             <LogOut size={18} />
             Çıkış yap
@@ -580,7 +591,6 @@ export default function AdminPanel() {
         <main className="adm-main">
           <div className="adm-page-heading">
             <div>
-              <p className="adm-kicker">ALPAGU DERNEĞİ</p>
               <h1 ref={heading} tabIndex={-1}>
                 {active.label}
               </h1>
@@ -589,24 +599,28 @@ export default function AdminPanel() {
                   ? "İçeriklerinizi buradan güncel tutabilirsiniz."
                   : section === "history"
                     ? "Önceki kayıtları inceleyin ve gerektiğinde geri yükleyin."
-                    : "Değişiklikleriniz Kaydet düğmesine bastığınızda sitede yayımlanır."}
+                    : section === "password"
+                      ? "Yönetim paneline giriş için kullandığınız şifreyi güncelleyin."
+                      : "Değişiklikleriniz Kaydet düğmesine bastığınızda sitede yayımlanır."}
               </p>
             </div>
-            <div className="adm-save-area">
-              <span className={dirty ? "unsaved" : ""}>
-                {dirty
-                  ? "Kaydedilmemiş değişiklikler"
-                  : "Tüm değişiklikler kaydedildi"}
-              </span>
-              <button
-                className="adm-button"
-                onClick={save}
-                disabled={busy || !dirty}
-              >
-                <Save size={18} />
-                {busy ? "Kaydediliyor…" : "Kaydet"}
-              </button>
-            </div>
+            {section !== "password" && (
+              <div className="adm-save-area">
+                <span className={dirty ? "unsaved" : ""}>
+                  {dirty
+                    ? "Kaydedilmemiş değişiklikler"
+                    : "Tüm değişiklikler kaydedildi"}
+                </span>
+                <button
+                  className="adm-button"
+                  onClick={save}
+                  disabled={busy || !dirty}
+                >
+                  <Save size={18} />
+                  {busy ? "Kaydediliyor…" : "Kaydet"}
+                </button>
+              </div>
+            )}
           </div>
           {(error || notice) && (
             <div
@@ -630,7 +644,6 @@ export default function AdminPanel() {
               <>
                 <div className="adm-welcome">
                   <div>
-                    <span className="adm-kicker">BİRLİKTE BÜYÜYEN İYİLİK</span>
                     <h2>
                       Her güncel bilgi,
                       <br />
@@ -1183,6 +1196,9 @@ export default function AdminPanel() {
                   </div>
                 </div>
               </>
+            )}
+            {section === "password" && (
+              <PasswordSettings busy={busy} onChange={updatePassword} />
             )}
             {section === "history" && (
               <div className="adm-card">

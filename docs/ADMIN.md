@@ -54,7 +54,17 @@ Preview, Vercel’in kendi deployment ve branch adresleri üzerinden yönetilebi
 
 İçerik özel depoda `content/published.json`, oturum ve giriş sınırı `auth/state.json`, görsel envanteri `media/index.json` olarak tutulur. Kayıtlar güçlü ETag koşuluyla atomik yazılır. Next.js sunucu önbelleği başarılı kayıt sonrası derhal geçersizleştirilir. Depo hataları başlangıç verisine dönülerek gizlenmez. İlk kayıt yoksa depodaki mevcut başlangıç içeriği kullanılır; panelden ilk başarılı kayıt bunu kalıcılaştırır. Sonraki dağıtımlar kaydedilmiş içerikleri değiştirmez.
 
-## Şifre değiştirme / sıfırlama
+## Şifre değiştirme
+
+Panel menüsündeki **Şifre değiştir** bölümünde mevcut şifreyi, yeni şifreyi ve tekrarını girin. Yeni şifre 8–256 karakter olmalıdır. Bu işlem içerik kaydından bağımsızdır ve anında uygulanır. Mevcut oturum yeni çerez ve CSRF değeriyle yenilenir; diğer tüm oturumlar kapatılır. Beş hatalı mevcut şifre denemesinden sonra o oturum için 15 dakika bekleme uygulanır.
+
+Yeni şifre, rastgele tuzla Argon2id (19 MiB, 2 tur, 1 paralellik) hash olarak yalnız özel `auth/state.json` kaydında saklanır. Düz şifre, API yanıtına, içerik geçmişine veya loglara yazılmaz. Mevcut başlangıç scrypt hash’leriyle giriş desteklenir. İçeriği geri yüklemek şifreyi değiştirmez. Eşzamanlı şifre değişikliklerinde yalnız bir işlem başarılı olur.
+
+Şifreler ve oturum iptali aynı atomik kayıtta tutulur; dağıtımlar panelden belirlenen şifreyi korur. Bu özelliği içermeyen eski uygulama sürümüne geri dönmeyin: o sürüm yalnız başlangıç şifresini okur.
+
+## Unutulan şifreyi sıfırlama
+
+Geliştirici erişimiyle yeni bir başlangıç hash’i oluşturup ortam değişkenini yenileyin. Bu kurtarma işlemi paneldeki şifreyi ve eski oturumları geçersiz kılar:
 
 ```sh
 pnpm admin:password

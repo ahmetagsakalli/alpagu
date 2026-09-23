@@ -146,7 +146,6 @@ export default function MediaPicker({
     >
       <div className="adm-dialog-heading">
         <div>
-          <span className="adm-kicker">Görsel kitaplığı</span>
           <h2 id="media-title">
             {onSelect ? "Bir görsel seçin" : "Görselleriniz"}
           </h2>

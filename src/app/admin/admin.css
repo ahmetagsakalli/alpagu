@@ -197,21 +197,6 @@ body:has(.adm-root) {
   color: var(--adm-ink) !important;
   font-size: 18px;
 }
-.adm-brand small {
-  display: block;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  color: var(--adm-muted);
-}
-.adm-nav-label {
-  color: #92a29b;
-  font-size: 9px;
-  font-weight: 750;
-  letter-spacing: 1.7px;
-  padding: 0 13px;
-  margin-bottom: 12px;
-}
 .adm-sidebar nav {
   display: flex;
   flex-direction: column;
@@ -249,15 +234,6 @@ body:has(.adm-root) {
 .adm-sidebar-bottom {
   margin-top: auto;
   padding: 26px 12px 0;
-}
-.adm-sidebar-bottom > span {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 10px;
-  color: #8b9a92;
-  border-bottom: 1px solid var(--adm-line);
-  padding-bottom: 18px;
 }
 .adm-sidebar-bottom > button {
   border: 0;
@@ -318,13 +294,20 @@ body:has(.adm-root) {
   gap: 20px;
   margin-bottom: 32px;
 }
-.adm-kicker {
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1.8px;
-  color: #6a8e7c !important;
-  margin: 0 0 10px;
-  display: block;
+.adm-password-form {
+  max-width: 540px;
+}
+.adm-password-visibility {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 6px 0 20px;
+  cursor: pointer;
+}
+.adm-password-visibility input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--adm-teal);
 }
 .adm-page-heading p:last-child {
   margin-bottom: 0;
@@ -1050,10 +1033,6 @@ body:has(.adm-root) {
   .adm-page-heading p:last-child {
     font-size: 10px;
     max-width: 235px;
-  }
-  .adm-kicker {
-    font-size: 8px;
-    letter-spacing: 1.3px;
   }
   .adm-save-area > .adm-button {
     min-height: 38px;

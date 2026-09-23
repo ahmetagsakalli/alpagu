@@ -1,9 +1,9 @@
 import {
-  randomBytes,
   scrypt as scryptCallback,
   timingSafeEqual,
   createHash,
 } from "node:crypto";
+import { hash, verify } from "@node-rs/argon2";
 export function hashToken(value: string) {
   return createHash("sha256").update(value).digest("hex");
 }
@@ -21,10 +21,17 @@ function scrypt(password: string, salt: Buffer) {
 export async function hashPassword(password: string) {
   if (password.length < 8 || password.length > 256)
     throw new Error("Şifre 8–256 karakter olmalıdır.");
-  const salt = randomBytes(16);
-  return `scrypt:${salt.toString("hex")}:${(await scrypt(password, salt)).toString("hex")}`;
+  return hash(password, {
+    algorithm: 2, // Argon2id; the package's const enum is not available at runtime.
+    memoryCost: 19456,
+    timeCost: 2,
+    parallelism: 1,
+    outputLen: 32,
+  });
 }
 export async function verifyPassword(password: string, stored: string) {
+  if (password.length > 256) return false;
+  if (stored.startsWith("$argon2id$")) return verify(stored, password);
   const parts = stored.split(":");
   if (
     parts[0] !== "scrypt" ||

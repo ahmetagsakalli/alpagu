@@ -140,23 +140,6 @@ body:has(.adm-root) {
   background:
     radial-gradient(ellipse at 20% 15%, #e4efeb 0, transparent 60%), #f7f9f8;
 }
-.adm-login-brand {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 35px;
-  font-size: 23px;
-  font-weight: 800;
-  letter-spacing: 3px;
-}
-.adm-login-brand small {
-  display: block;
-  font-size: 10px;
-  letter-spacing: 2px;
-  font-weight: 600;
-  color: var(--adm-muted);
-  margin-top: 2px;
-}
 .adm-login-card {
   width: 100%;
   max-width: 430px;
@@ -166,19 +149,16 @@ body:has(.adm-root) {
   border-radius: 15px;
   box-shadow: 0 20px 55px #254c3608;
 }
-.adm-login-icon {
-  display: inline-flex;
+.adm-login-heading {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  background: #edf6f1;
-  color: var(--adm-teal);
-  margin-bottom: 24px;
+  gap: 20px;
+  margin-bottom: 32px;
+  text-align: center;
 }
-.adm-login-card > p {
-  margin-bottom: 27px;
+.adm-login-heading h1 {
+  margin-bottom: 0;
 }
 .adm-login-card > .adm-button {
   width: 100%;
@@ -1300,6 +1280,6 @@ body:has(.adm-root) {
 }
 
 .adm-brand img,
-.adm-login-brand img {
+.adm-login-heading img {
   border-radius: 50%;
 }

@@ -460,23 +460,16 @@ export default function AdminPanel() {
   if (phase === "login")
     return (
       <main className="adm-login">
-        <div className="adm-login-brand">
-          <Image
-            src="/images/logo.webp"
-            alt="Alpagu Derneği"
-            width={72}
-            height={72}
-          />
-          <span>
-            ALPAGU<small>YÖNETİM PANELİ</small>
-          </span>
-        </div>
         <form className="adm-login-card" onSubmit={signIn}>
-          <span className="adm-login-icon">
-            <ShieldCheck size={26} />
-          </span>
-          <h1>Hoş geldiniz.</h1>
-          <p>Derneğimizin içeriklerini yönetmek için giriş yapın.</p>
+          <div className="adm-login-heading">
+            <Image
+              src="/images/logo.webp"
+              alt="Alpagu Derneği"
+              width={88}
+              height={88}
+            />
+            <h1>Yönetim Paneli</h1>
+          </div>
           <label className="adm-field">
             <span>Yönetim şifresi</span>
             <input
